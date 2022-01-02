@@ -23,6 +23,7 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         float_list.setOnClickListener {
             val jumpAction = ListFragmentDirections.actionListFragmentToDetailFragment()
+            jumpAction.dogUuid = 5
             Navigation.findNavController(it).navigate(jumpAction)
         }
     }
