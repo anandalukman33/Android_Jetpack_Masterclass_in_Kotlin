@@ -22,9 +22,12 @@
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="?android:attr/fingerprintAuthDrawable" />
+            app:srcCompat="@drawable/list_icon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
