@@ -1,5 +1,6 @@
 package com.example.appudemyanteraja.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ class DogsListAdapter(
     private val dogsList: ArrayList<DogBreed>
 ) : RecyclerView.Adapter<DogsListAdapter.DogsViewHolder>() {
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateDogList(newDogsList: List<DogBreed>) {
         dogsList.clear()
         dogsList.addAll(newDogsList)
@@ -42,8 +44,8 @@ class DogsListAdapter(
     override fun onBindViewHolder(holder: DogsViewHolder, position: Int) {
 
         // Initialization id of item layout
-        dogName = holder.view.findViewById(R.id.tv_dog_name)
-        lifeSpan = holder.view.findViewById(R.id.tv_dog_lifespan)
+        dogName = holder.view.findViewById(R.id.tv_name)
+        lifeSpan = holder.view.findViewById(R.id.life_span)
 
         // Inserting String Api to TextView Layout
         dogName?.text = dogsList[position].dogBreed
