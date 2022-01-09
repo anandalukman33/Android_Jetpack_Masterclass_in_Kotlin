@@ -23,6 +23,7 @@ class ListFragment : Fragment() {
     private var listError: TextView? = null
     private var loading: ProgressBar? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,22 +31,32 @@ class ListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
+
+    /**
+     * Initialization Id Layout
+     */
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerDogList = view.findViewById(R.id.dogs_list)
         listError = view.findViewById(R.id.list_error)
         loading = view.findViewById(R.id.loading_view)
-
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
-        viewModel.refresh()
+
 
         recyclerDogList?.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = dogsListAdapter
         }
+        viewModel.refresh()
         observeViewModel()
     }
+
+
+    /**
+     * Inserting Data ...
+     */
 
     private fun observeViewModel() {
         viewModel.dogs.observe(viewLifecycleOwner, Observer { dogs ->
@@ -63,7 +74,6 @@ class ListFragment : Fragment() {
                     } else {
                         View.GONE
                     }
-
             }
         })
 

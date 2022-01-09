@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appudemyanteraja.R
 import com.example.appudemyanteraja.model.DogBreed
+import com.example.appudemyanteraja.view.ListFragmentDirections
 
 class DogsListAdapter(
     private val dogsList: ArrayList<DogBreed>
@@ -51,6 +53,9 @@ class DogsListAdapter(
         dogName?.text = dogsList[position].dogBreed
         lifeSpan?.text = dogsList[position].lifeSpan
 
+        holder.view.setOnClickListener {
+            Navigation.findNavController(it).navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
+        }
     }
 
     class DogsViewHolder(val view: View) : RecyclerView.ViewHolder(view)
