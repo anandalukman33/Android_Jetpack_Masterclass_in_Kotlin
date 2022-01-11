@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appudemyanteraja.R
 import com.example.appudemyanteraja.model.DogBreed
+import com.example.appudemyanteraja.util.getProgressDrawable
+import com.example.appudemyanteraja.util.loadImage
 import com.example.appudemyanteraja.view.ListFragmentDirections
 
 class DogsListAdapter(
@@ -27,6 +30,7 @@ class DogsListAdapter(
      */
     private var dogName: TextView? = null
     private var lifeSpan: TextView? = null
+    private var imageDog: ImageView? = null
 
     /**
      * Override Function Implementation
@@ -48,10 +52,12 @@ class DogsListAdapter(
         // Initialization id of item layout
         dogName = holder.view.findViewById(R.id.tv_name)
         lifeSpan = holder.view.findViewById(R.id.life_span)
+        imageDog = holder.view.findViewById(R.id.iv_item_dog)
 
-        // Inserting String Api to TextView Layout
+        // Inserting String and Url Image Api to TextView Layout
         dogName?.text = dogsList[position].dogBreed
         lifeSpan?.text = dogsList[position].lifeSpan
+        imageDog?.loadImage(dogsList[position].imageUrl, getProgressDrawable(imageDog?.context!!))
 
         holder.view.setOnClickListener {
             Navigation.findNavController(it).navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
