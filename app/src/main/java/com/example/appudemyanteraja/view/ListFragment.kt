@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.appudemyanteraja.R
 import com.example.appudemyanteraja.adapter.DogsListAdapter
 import com.example.appudemyanteraja.viewmodel.ListViewModel
@@ -22,6 +23,7 @@ class ListFragment : Fragment() {
     private var recyclerDogList: RecyclerView? = null
     private var listError: TextView? = null
     private var loading: ProgressBar? = null
+    private var swipeRefresh: SwipeRefreshLayout? = null
 
 
     override fun onCreateView(
@@ -42,12 +44,22 @@ class ListFragment : Fragment() {
         recyclerDogList = view.findViewById(R.id.dogs_list)
         listError = view.findViewById(R.id.list_error)
         loading = view.findViewById(R.id.loading_view)
+        swipeRefresh = view.findViewById(R.id.refresh_layout)
         viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
 
 
         recyclerDogList?.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = dogsListAdapter
+        }
+
+
+        swipeRefresh?.setOnRefreshListener { // Action for Swipe Refresh Layout
+            recyclerDogList?.visibility = View.GONE
+            listError?.visibility = View.GONE
+            loading?.visibility = View.GONE
+            viewModel.refresh()
+            swipeRefresh?.isRefreshing = false
         }
         viewModel.refresh()
         observeViewModel()
