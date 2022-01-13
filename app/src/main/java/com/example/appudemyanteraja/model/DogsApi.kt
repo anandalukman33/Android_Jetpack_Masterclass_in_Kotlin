@@ -1,6 +1,6 @@
 package com.example.appudemyanteraja.model
 
-import com.example.appudemyanteraja.constant.UrlConstant.END_POINT
+import com.example.appudemyanteraja.constant.DogConstant.END_POINT
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 
