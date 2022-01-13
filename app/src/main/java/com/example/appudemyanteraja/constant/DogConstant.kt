@@ -22,4 +22,7 @@ object DogConstant {
     const val BREEDS_GROUP = "breed_group"
     const val BREEDS_FOR = "bred_for"
     const val DOG_URL = "dog_url"
+
+    // Database
+    const val DATABASE_NAME = "dog_database"
 }
