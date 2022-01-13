@@ -58,7 +58,8 @@ class ListFragment : Fragment() {
             recyclerDogList?.visibility = View.GONE
             listError?.visibility = View.GONE
             loading?.visibility = View.GONE
-            viewModel.refresh()
+            viewModel.refreshBypassCache() // ketika di refresh akan memanggil atau memperbaharui data dari endpoint/api
+            //viewModel.refresh()
             swipeRefresh?.isRefreshing = false
         }
         viewModel.refresh()

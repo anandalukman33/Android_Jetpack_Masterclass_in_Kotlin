@@ -1,6 +1,6 @@
 package com.example.appudemyanteraja.model
 
-import com.example.appudemyanteraja.constant.UrlConstant.BASE_URL
+import com.example.appudemyanteraja.constant.DogConstant.BASE_URL
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
