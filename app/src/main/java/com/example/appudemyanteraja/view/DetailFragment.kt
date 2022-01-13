@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.example.appudemyanteraja.R
+import com.example.appudemyanteraja.util.getProgressDrawable
+import com.example.appudemyanteraja.util.loadImage
 import com.example.appudemyanteraja.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -46,12 +48,13 @@ class DetailFragment : Fragment() {
         dogPurpose = view.findViewById(R.id.tv_dog_purpose)
         dogTemperament = view.findViewById(R.id.tv_dog_temperament)
         dogLifeSpan = view.findViewById(R.id.tv_dog_lifespan)
-        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+
 
         arguments?.let {
             dogUuid = DetailFragmentArgs.fromBundle(it).dogUuid
         }
-        viewModel.fetch()
+        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        viewModel.fetch(dogUuid)  //mengambil data dari DetailViewModel yang sudah dibawa olehnya dari database
         observeViewModel()
     }
 
@@ -67,6 +70,11 @@ class DetailFragment : Fragment() {
                 dogPurpose?.text = dog.bredFor
                 dogTemperament?.text = dog.temperament
                 dogLifeSpan?.text = dog.lifeSpan
+
+                context?.let { // Mengambil gambar dari database berdasarkan uuid yang dipilih
+                    dogImage?.loadImage(dog.imageUrl, getProgressDrawable(it))
+                }
+
             }
         })
     }

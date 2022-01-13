@@ -60,7 +60,11 @@ class DogsListAdapter(
         imageDog?.loadImage(dogsList[position].imageUrl, getProgressDrawable(imageDog?.context!!))
 
         holder.view.setOnClickListener {
-            Navigation.findNavController(it).navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
+            // Generate Uuid ketika klik gambar dog di halaman ListFragment
+            val action = ListFragmentDirections.actionListFragmentToDetailFragment()
+            action.dogUuid = dogsList[position].uuid
+
+            Navigation.findNavController(it).navigate(action)
         }
     }
 
