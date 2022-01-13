@@ -29,4 +29,6 @@ class SharedPreferencesHelper {
         pref?.edit(commit = true) {putLong(PREF_TIME, time)}
     }
 
+    fun getUpdateTime() = pref?.getLong(PREF_TIME, 0)
+
 }

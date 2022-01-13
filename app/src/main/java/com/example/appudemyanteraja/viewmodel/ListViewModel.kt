@@ -1,6 +1,7 @@
 package com.example.appudemyanteraja.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.appudemyanteraja.database.DogDatabase
@@ -22,12 +23,39 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
     val dogsLoadError = MutableLiveData<Boolean>()
     val loading = MutableLiveData<Boolean>()
 
+    private var refreshTime = 5 * 60 * 1000 * 1000 * 1000L  // Lima menit dalam nano second
+
     /**
      * Method Implementation
      */
 
     fun refresh() {
+        var updateTime = prefHelper.getUpdateTime()
+
+        /**
+         * Kondisi dimana ketika data yang diambil kurang dari lima menit dalam nano second
+         * maka akan data tersebut akan diambil dari database
+         * jika tidak maka akan diambil lewat endpoint atau API
+         */
+        if (updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+            fetchFromDatabase()
+        } else {
+            fetchFromRemote()
+        }
+    }
+
+    fun refreshBypassCache() {
         fetchFromRemote()
+    }
+
+    private fun fetchFromDatabase() {
+        loading.value = true
+
+        launch {
+            val dogs = DogDatabase(getApplication()).dogDao().getAllDogs()
+            dogsRetrieved(dogs)
+            Toast.makeText(getApplication(), "Data Anjing diambil dari Database", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun fetchFromRemote() {
@@ -40,6 +68,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                     override fun onSuccess(t: List<DogBreed>?) {
                         if (t != null) {
                             storeDogsLocally(t)
+                            Toast.makeText(getApplication(), "Data Anjing diambil dari API", Toast.LENGTH_SHORT).show()
                         }
                     }
 

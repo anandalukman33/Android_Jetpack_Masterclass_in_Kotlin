@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.appudemyanteraja.constant.DogConstant.DATABASE_NAME
 import com.example.appudemyanteraja.model.DogBreed
 
-@Database(entities = [DogBreed::class], version = 1)
+@Database(entities = [DogBreed::class], version = 1, exportSchema = false)
 abstract class DogDatabase : RoomDatabase() {
 
     abstract fun dogDao(): DogDao
