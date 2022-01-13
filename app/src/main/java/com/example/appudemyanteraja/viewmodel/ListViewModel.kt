@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.appudemyanteraja.database.DogDatabase
 import com.example.appudemyanteraja.model.DogApiService
 import com.example.appudemyanteraja.model.DogBreed
+import com.example.appudemyanteraja.util.SharedPreferencesHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -13,6 +14,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
 class ListViewModel(application: Application) : BaseViewModel(application) {
+
+    private var prefHelper = SharedPreferencesHelper(getApplication())
     private val dogsService = DogApiService()
     private val disposable = CompositeDisposable()
     val dogs = MutableLiveData<List<DogBreed>>()
@@ -69,6 +72,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
             }
             dogsRetrieved(list)
         }
+        prefHelper.saveUpdateTime(System.nanoTime())
     }
 
     override fun onCleared() {
