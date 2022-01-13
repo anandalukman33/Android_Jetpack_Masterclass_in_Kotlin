@@ -1,15 +1,18 @@
 package com.example.appudemyanteraja.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.appudemyanteraja.database.DogDatabase
 import com.example.appudemyanteraja.model.DogApiService
 import com.example.appudemyanteraja.model.DogBreed
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.launch
 
-class ListViewModel : ViewModel() {
+class ListViewModel(application: Application) : BaseViewModel(application) {
     private val dogsService = DogApiService()
     private val disposable = CompositeDisposable()
     val dogs = MutableLiveData<List<DogBreed>>()
@@ -32,9 +35,9 @@ class ListViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
                     override fun onSuccess(t: List<DogBreed>?) {
-                        dogs.value = t
-                        dogsLoadError.value = false
-                        loading.value = false
+                        if (t != null) {
+                            storeDogsLocally(t)
+                        }
                     }
 
                     override fun onError(e: Throwable?) {
@@ -45,6 +48,27 @@ class ListViewModel : ViewModel() {
 
                 })
         )
+    }
+
+    private fun dogsRetrieved(dogList: List<DogBreed>) {
+        dogs.value = dogList
+        dogsLoadError.value = false
+        loading.value = false
+    }
+
+    private fun storeDogsLocally(list: List<DogBreed>) {
+        launch {
+            val dao = DogDatabase(getApplication()).dogDao()
+            dao.deleteAllDogs()
+            val result = dao.insertAll(*list.toTypedArray()) // Insert All Arrayof DogBreed
+
+            var i = 0
+            while (i < list.size) {
+                list[i].uuid = result[i].toInt()
+                ++i
+            }
+            dogsRetrieved(list)
+        }
     }
 
     override fun onCleared() {
