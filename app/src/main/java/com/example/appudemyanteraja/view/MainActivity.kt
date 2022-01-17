@@ -7,6 +7,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.appudemyanteraja.R
+import com.example.appudemyanteraja.util.Logger
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Logger.init()
 
         navController = Navigation.findNavController(this, R.id.fragmentMain)
         NavigationUI.setupActionBarWithNavController(this, navController)

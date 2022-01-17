@@ -54,6 +54,7 @@ def paginationVersion = '2.1.2'
 def picassoVersion = '2.71828'
 def okhttpVersion = '4.9.3'
 def coroutinesVersion = '1.5.2'
+def logger = '2.2.0'
 
 dependencies {
 
@@ -113,5 +114,8 @@ dependencies {
 
     // Interceptor OkHttp Library
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+
+    // Logger Pretty
+    implementation "com.orhanobut:logger:$logger"
 
 }
