@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:src="@mipmap/icon_bot"
+            android:imageUrl="@{dog.imageUrl}"
             android:padding="4dp"/>
 
         <LinearLayout
