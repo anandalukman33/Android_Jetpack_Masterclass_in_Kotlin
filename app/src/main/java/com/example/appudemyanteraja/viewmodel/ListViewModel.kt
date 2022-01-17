@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.example.appudemyanteraja.database.DogDatabase
 import com.example.appudemyanteraja.model.DogApiService
 import com.example.appudemyanteraja.model.DogBreed
+import com.example.appudemyanteraja.util.GsonUtils
+import com.example.appudemyanteraja.util.Logger
 import com.example.appudemyanteraja.util.SharedPreferencesHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -54,6 +56,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
         launch {
             val dogs = DogDatabase(getApplication()).dogDao().getAllDogs()
             dogsRetrieved(dogs)
+            Logger.json(GsonUtils.bean2Json(dogs))
             Toast.makeText(getApplication(), "Data Anjing diambil dari Database", Toast.LENGTH_SHORT).show()
         }
     }
@@ -67,6 +70,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                 .subscribeWith(object : DisposableSingleObserver<List<DogBreed>>() {
                     override fun onSuccess(t: List<DogBreed>?) {
                         if (t != null) {
+                            Logger.json(GsonUtils.bean2Json(t!!))
                             storeDogsLocally(t)
                             Toast.makeText(getApplication(), "Data Anjing diambil dari API", Toast.LENGTH_SHORT).show()
                         }
@@ -76,6 +80,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                         dogsLoadError.value = true
                         loading.value = false
                         e?.printStackTrace()
+                        Logger.e("Error ListViewModel $e")
                     }
 
                 })
