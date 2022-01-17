@@ -14,11 +14,13 @@ import com.example.appudemyanteraja.databinding.ItemDogBinding
 import com.example.appudemyanteraja.model.DogBreed
 import com.example.appudemyanteraja.util.getProgressDrawable
 import com.example.appudemyanteraja.util.loadImage
+import com.example.appudemyanteraja.view.BindingClickListener
 import com.example.appudemyanteraja.view.ListFragmentDirections
+import kotlinx.android.synthetic.main.item_dog.view.*
 
 class DogsListAdapter(
     private val dogsList: ArrayList<DogBreed>
-) : RecyclerView.Adapter<DogsListAdapter.DogsViewHolder>() {
+) : RecyclerView.Adapter<DogsListAdapter.DogsViewHolder>(), BindingClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateDogList(newDogsList: List<DogBreed>) {
@@ -45,7 +47,8 @@ class DogsListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 //        val view = inflater.inflate(R.layout.item_dog, parent, false)
-        val dataBinding = DataBindingUtil.inflate<ItemDogBinding>(inflater, R.layout.item_dog, parent, false)
+        val dataBinding =
+            DataBindingUtil.inflate<ItemDogBinding>(inflater, R.layout.item_dog, parent, false)
         return DogsViewHolder(dataBinding)
     }
 
@@ -53,7 +56,7 @@ class DogsListAdapter(
     override fun onBindViewHolder(holder: DogsViewHolder, position: Int) {
 
         holder.view.dog = dogsList[position]
-
+        holder.view.listener = this
 
 //        // Initialization id of item layout
 //        dogName = holder.view.findViewById(R.id.tv_name)
@@ -71,6 +74,14 @@ class DogsListAdapter(
 //            action.dogUuid = dogsList[position].uuid
 //            Navigation.findNavController(it).navigate(action)
 //        }
+    }
+
+    override fun imageClicked(v: View) {
+        // Generate Uuid ketika klik gambar dog di halaman ListFragment
+        val uuid = v.itemId.text.toString().toInt()
+        val action = ListFragmentDirections.actionListFragmentToDetailFragment()
+        action.dogUuid = uuid
+        Navigation.findNavController(v).navigate(action)
     }
 
     class DogsViewHolder(val view: ItemDogBinding) : RecyclerView.ViewHolder(view.root)

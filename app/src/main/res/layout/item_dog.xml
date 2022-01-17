@@ -5,12 +5,25 @@
         <variable
             name="dog"
             type="com.example.appudemyanteraja.model.DogBreed" />
+        
+        <variable
+            name="listener"
+            type="com.example.appudemyanteraja.view.BindingClickListener" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:onClick="@{listener::imageClicked}"
+        >
+
+        <TextView
+            android:id="@+id/itemId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@{String.valueOf(dog.uuid)}"/>
 
         <ImageView
             android:id="@+id/iv_item_dog"
