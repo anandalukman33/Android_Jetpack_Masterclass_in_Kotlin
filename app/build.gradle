@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
+    id "org.sonarqube" version "3.3"
 }
 
 android {
@@ -36,6 +37,14 @@ android {
         jvmTarget = '1.8'
     }
 }
+
+// Sonarqube Properties
+sonarqube {
+    properties {
+        property 'sonar.projectName','com.example.appudemyanteraja'
+    }
+}
+
 /*
 ** Variabel versi pada library pihak ketiga yg kita gunakan.
  */
