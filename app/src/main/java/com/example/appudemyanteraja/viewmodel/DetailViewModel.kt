@@ -2,7 +2,6 @@ package com.example.appudemyanteraja.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.appudemyanteraja.database.DogDatabase
 import com.example.appudemyanteraja.model.DogBreed
 import kotlinx.coroutines.launch

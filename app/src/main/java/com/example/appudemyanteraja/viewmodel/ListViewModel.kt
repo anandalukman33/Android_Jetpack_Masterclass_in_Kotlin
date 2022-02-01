@@ -3,7 +3,6 @@ package com.example.appudemyanteraja.viewmodel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.appudemyanteraja.database.DogDatabase
 import com.example.appudemyanteraja.model.DogApiService
 import com.example.appudemyanteraja.model.DogBreed
