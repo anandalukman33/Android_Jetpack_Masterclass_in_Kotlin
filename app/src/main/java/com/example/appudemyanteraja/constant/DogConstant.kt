@@ -24,5 +24,5 @@ object DogConstant {
     const val DOG_URL = "dog_url"
 
     // Database
-    const val DATABASE_NAME = "dog_database"
+    const val DATABASE_NAME = "dog-database.db"
 }
