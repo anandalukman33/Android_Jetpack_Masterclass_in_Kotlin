@@ -18,36 +18,36 @@ import com.example.appudemyanteraja.constant.DogConstant.TEMPERAMENT
 import com.example.appudemyanteraja.constant.DogConstant.URL
 import com.google.gson.annotations.SerializedName
 
-@Entity
+@Entity(tableName = "dogs_table")
 data class DogBreed (
+
+    @PrimaryKey(autoGenerate = true)
+    var uuid: Int,
 
     @ColumnInfo(name = BREED_ID)
     @SerializedName(ID)
-    val breedId: String? = null,
+    val breedId: String,
 
     @ColumnInfo(name = DOG_NAME)
     @SerializedName(NAME)
-    val dogBreed: String? = null,
+    val dogBreed: String,
 
     @ColumnInfo(name = LIFE_SPANS)
     @SerializedName(LIFE_SPAN)
-    val lifeSpan: String? = null,
+    val lifeSpan: String,
 
     @ColumnInfo(name = BREEDS_GROUP)
     @SerializedName(BREED_GROUP)
-    val breedGroup: String? = null,
+    val breedGroup: String,
 
     @ColumnInfo(name = BREEDS_FOR)
     @SerializedName(BRED_FOR)
-    val bredFor: String? = null,
+    val bredFor: String,
 
     @SerializedName(TEMPERAMENT)
-    val temperament: String? = null,
+    val temperament: String,
 
     @ColumnInfo(name = DOG_URL)
     @SerializedName(URL)
-    val imageUrl: String? = null
-) {
-    @PrimaryKey(autoGenerate = true)
-    var uuid: Int = 0
-}
+    val imageUrl: String
+)

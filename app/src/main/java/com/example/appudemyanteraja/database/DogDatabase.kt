@@ -25,7 +25,7 @@ abstract class DogDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
             DogDatabase::class.java,
-            DATABASE_NAME
+            "dogs.db"
 
         ).build()
     }
