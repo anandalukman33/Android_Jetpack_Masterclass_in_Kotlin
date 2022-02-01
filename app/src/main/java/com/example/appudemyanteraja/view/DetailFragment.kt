@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.example.appudemyanteraja.R
+import com.example.appudemyanteraja.databinding.FragmentDetailBinding
 import com.example.appudemyanteraja.util.getProgressDrawable
 import com.example.appudemyanteraja.util.loadImage
 import com.example.appudemyanteraja.viewmodel.DetailViewModel
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
 class DetailFragment : Fragment() {
 
     private lateinit var viewModel: DetailViewModel
+    private lateinit var dataBinding: FragmentDetailBinding
     private var dogUuid = 0
     private var dogImage: ImageView? = null
     private var dogName: TextView? = null
@@ -33,7 +36,8 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
+        return dataBinding.root
     }
 
     /**
@@ -66,11 +70,12 @@ class DetailFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.dogLiveData.observe(viewLifecycleOwner, Observer { dog ->
             dog?.let {
-                dogName?.text = dog.dogBreed
-                dogPurpose?.text = dog.bredFor
-                dogTemperament?.text = dog.temperament
-                dogLifeSpan?.text = dog.lifeSpan
-
+                dataBinding.dog = dog
+//                dogName?.text = dog.dogBreed
+//                dogPurpose?.text = dog.bredFor
+//                dogTemperament?.text = dog.temperament
+//                dogLifeSpan?.text = dog.lifeSpan
+//
                 context?.let { // Mengambil gambar dari database berdasarkan uuid yang dipilih
                     dogImage?.loadImage(dog.imageUrl, getProgressDrawable(it))
                 }
