@@ -7,11 +7,15 @@
         <variable
             name="dog"
             type="com.example.appudemyanteraja.model.DogBreed" />
+        <variable
+            name="pallete"
+            type="com.example.appudemyanteraja.model.PalleteBean" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@{pallete.palleteColor}"
         tools:context=".view.DetailFragment">
 
         <ImageView

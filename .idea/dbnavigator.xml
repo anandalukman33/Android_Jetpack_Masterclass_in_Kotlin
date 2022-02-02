@@ -27,7 +27,9 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="d4bcba3a-525b-4dc0-97d9-c5db59059d7f" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />

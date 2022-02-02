@@ -55,6 +55,7 @@ def picassoVersion = '2.71828'
 def okhttpVersion = '4.9.3'
 def coroutinesVersion = '1.5.2'
 def logger = '2.2.0'
+def palleteVersion = '1.0.0'
 
 dependencies {
 
@@ -117,5 +118,8 @@ dependencies {
 
     // Logger Pretty
     implementation "com.orhanobut:logger:$logger"
+
+    // Pallete
+    implementation "androidx.palette:palette-ktx:$palleteVersion"
 
 }
