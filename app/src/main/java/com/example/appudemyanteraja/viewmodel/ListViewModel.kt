@@ -9,6 +9,7 @@ import com.example.appudemyanteraja.model.DogApiService
 import com.example.appudemyanteraja.model.DogBreed
 import com.example.appudemyanteraja.util.GsonUtils
 import com.example.appudemyanteraja.util.Logger
+import com.example.appudemyanteraja.util.NotificationUtil
 import com.example.appudemyanteraja.util.SharedPreferencesHelper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -72,6 +73,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                         if (t != null) {
                             Logger.json(GsonUtils.bean2Json(t!!))
                             storeDogsLocally(t)
+                            NotificationUtil(getApplication()).createNotification() // Implementasi Notification
                             Toast.makeText(getApplication(), "Data Anjing diambil dari API", Toast.LENGTH_SHORT).show()
                         }
                     }
