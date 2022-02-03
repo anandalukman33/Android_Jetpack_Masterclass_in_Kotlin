@@ -31,7 +31,7 @@ class NotificationUtil(val context: Context) {
 
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
 
-        val notificationIcon = BitmapFactory.decodeResource(context.resources, R.drawable.icon_app)
+        val notificationIcon = BitmapFactory.decodeResource(context.resources, R.drawable.img_content)
 
         val generateNotification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.logo_al)
