@@ -9,6 +9,7 @@ class SharedPreferencesHelper {
 
     companion object {
         private const val PREF_TIME = "pref_time"
+        private const val PREF_CACHE_DURATION = "pref_cache_duration"
         private var pref: SharedPreferences? = null
         private val LOCK = Any()
 
@@ -30,5 +31,7 @@ class SharedPreferencesHelper {
     }
 
     fun getUpdateTime() = pref?.getLong(PREF_TIME, 0)
+
+    fun getCacheDuration() = pref?.getString(PREF_CACHE_DURATION, "")
 
 }
