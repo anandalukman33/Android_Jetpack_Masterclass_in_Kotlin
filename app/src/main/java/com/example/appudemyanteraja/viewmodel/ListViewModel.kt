@@ -3,7 +3,6 @@ package com.example.appudemyanteraja.viewmodel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.appudemyanteraja.database.DogDatabase
 import com.example.appudemyanteraja.model.DogApiService
 import com.example.appudemyanteraja.model.DogBreed
@@ -11,11 +10,13 @@ import com.example.appudemyanteraja.util.GsonUtils
 import com.example.appudemyanteraja.util.Logger
 import com.example.appudemyanteraja.util.NotificationUtil
 import com.example.appudemyanteraja.util.SharedPreferencesHelper
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import java.lang.NumberFormatException
 
 class ListViewModel(application: Application) : BaseViewModel(application) {
 
@@ -33,6 +34,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
      */
 
     fun refresh() {
+        checkCacheDuration()
         var updateTime = prefHelper.getUpdateTime()
 
         /**
@@ -47,6 +49,18 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    private fun checkCacheDuration() {
+        val cachePreference = prefHelper.getCacheDuration()
+
+        try {
+            val cachePreferenceInt = cachePreference?.toInt() ?: 5 + 60
+            refreshTime = cachePreferenceInt.times(1000 * 1000 * 1000L)
+        } catch (e: NumberFormatException) { // pengecualian yang diinput selain integer, misal user input string akan masuk kesini
+            e.printStackTrace()
+            Toast.makeText(getApplication(), "Harus pake angka di pengaturan durasi!!", Toast.LENGTH_LONG).show()
+        }
+    }
+
     fun refreshBypassCache() {
         fetchFromRemote()
     }
@@ -58,7 +72,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
             val dogs = DogDatabase(getApplication()).dogDao().getAllDogs()
             dogsRetrieved(dogs)
             Logger.json(GsonUtils.bean2Json(dogs))
-            Toast.makeText(getApplication(), "Data Anjing diambil dari Database", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(getApplication(), "Data Anjing diambil dari Database", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -74,7 +88,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                             Logger.json(GsonUtils.bean2Json(t!!))
                             storeDogsLocally(t)
                             NotificationUtil(getApplication()).createNotification() // Implementasi Notification
-                            Toast.makeText(getApplication(), "Data Anjing diambil dari API", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(getApplication(), "Data Anjing diambil dari API", Toast.LENGTH_SHORT).show()
                         }
                     }
 

@@ -7,17 +7,20 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.appudemyanteraja.view.ListFragment"
-        android:label="ListFragment" >
+        android:label="Beranda">
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
             app:destination="@id/detailFragment3"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/actionSetting"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment3"
         android:name="com.example.appudemyanteraja.view.DetailFragment"
-        android:label="DetailFragment" >
+        android:label="Detail Anjing" >
         <action
             android:id="@+id/action_detailFragment_to_listFragment"
             app:destination="@id/listFragment"
@@ -28,4 +31,8 @@
             android:defaultValue="0"
             app:argType="integer"/>
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.appudemyanteraja.view.SettingsFragment"
+        android:label="Pengaturan" />
 </navigation>
