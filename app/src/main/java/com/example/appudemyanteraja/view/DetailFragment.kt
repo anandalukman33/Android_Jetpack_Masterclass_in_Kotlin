@@ -3,10 +3,8 @@ package com.example.appudemyanteraja.view
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
@@ -43,6 +41,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
         return dataBinding.root
     }
@@ -114,5 +113,24 @@ class DetailFragment : Fragment() {
                 }
 
             })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.detail_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_send_sms -> {
+
+            }
+
+            R.id.action_share -> {
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }
