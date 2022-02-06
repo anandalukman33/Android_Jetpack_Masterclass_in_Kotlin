@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,10 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.appudemyanteraja.R
 import com.example.appudemyanteraja.databinding.FragmentDetailBinding
+import com.example.appudemyanteraja.databinding.SendSmsDialogBinding
+import com.example.appudemyanteraja.model.DogBreed
 import com.example.appudemyanteraja.model.PalleteBean
+import com.example.appudemyanteraja.model.SmsBean
 import com.example.appudemyanteraja.util.getProgressDrawable
 import com.example.appudemyanteraja.util.loadImage
 import com.example.appudemyanteraja.viewmodel.DetailViewModel
@@ -30,6 +34,7 @@ class DetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
     private lateinit var dataBinding: FragmentDetailBinding
     private var sendSmsStarted = false
+    private var currentDog: DogBreed? = null
     private var dogUuid = 0
     private var dogImage: ImageView? = null
     private var dogName: TextView? = null
@@ -76,6 +81,7 @@ class DetailFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.dogLiveData.observe(viewLifecycleOwner, Observer { dog ->
+            currentDog = dog
             dog?.let {
                 dataBinding.dog = dog
 //                dogName?.text = dog.dogBreed
@@ -137,6 +143,34 @@ class DetailFragment : Fragment() {
     }
 
     fun onPermissionResult(permissionGranted: Boolean) {
+        if (sendSmsStarted && permissionGranted) {
+            context?.let {
+                val smsBean = SmsBean("", "${currentDog?.dogBreed} bred for ${currentDog?.bredFor}", currentDog?.imageUrl)
+
+                val dialogBinding = DataBindingUtil.inflate<SendSmsDialogBinding>(
+                    LayoutInflater.from(it),
+                    R.layout.send_sms_dialog,
+                    null,
+                    false
+                )
+
+                AlertDialog.Builder(it)
+                    .setView(dialogBinding.root)
+                    .setPositiveButton("Send SMS") { dialog, which ->
+                        if (!dialogBinding.smsDestination.text.isNullOrEmpty()) {
+                            smsBean.kepada = dialogBinding.smsDestination.text.toString()
+                            sendSms(smsBean)
+                        }
+                    }
+                    .setNegativeButton("Cancel") { dialog, which -> }
+                    .show()
+
+                dialogBinding.smsBean = smsBean
+            }
+        }
+    }
+
+    private fun sendSms(smsBean: SmsBean) {
 
     }
 }
