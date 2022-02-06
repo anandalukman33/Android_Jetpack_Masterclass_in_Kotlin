@@ -1,8 +1,11 @@
 package com.example.appudemyanteraja.view
 
+import android.app.PendingIntent
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
@@ -135,7 +138,12 @@ class DetailFragment : Fragment() {
             }
 
             R.id.action_share -> {
-
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Check out this dog breed")
+                intent.putExtra(Intent.EXTRA_TEXT, "${currentDog?.dogBreed} bred for ${currentDog?.bredFor}")
+                intent.putExtra(Intent.EXTRA_STREAM, currentDog?.imageUrl)
+                startActivity(Intent.createChooser(intent, "Share with"))
             }
         }
 
@@ -171,6 +179,9 @@ class DetailFragment : Fragment() {
     }
 
     private fun sendSms(smsBean: SmsBean) {
-
+        val intent = Intent(context, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(context, 0,intent, 0)
+        val sms = SmsManager.getDefault()
+        sms.sendTextMessage(smsBean.kepada, null, smsBean.text, pendingIntent, null)
     }
 }
